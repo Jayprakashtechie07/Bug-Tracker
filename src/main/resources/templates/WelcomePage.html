@@ -1,0 +1,176 @@
+<th:block xmlns:th="https://www.thymeleaf.org">
+    <div th:fragment="WelcomePage">
+        <div data-ng-app="app" data-ng-controller="welcomeCtrl">
+            <div class="container-fluid">
+                <div class="row">
+                    <main class="col-md-12 mt-4">
+                        <h2 class="text-center" style="color: #1e90ff;">Welcome to the Dashboard</h2>
+                        <hr style="border-top: 2px solid #00bfff;">
+                    </main>
+
+                    <!-- Table displaying issue tickets -->
+                    <div class="container-fluid mt-4">
+                        <div class="table-responsive">
+                            <table class="table table-sm table-striped text-center" style="font-size: 14px; background-color: #ffffff;">
+                                <thead style="background-color: #1e90ff; color: #ffffff;">
+                                    <tr>
+                                        <th>ID</th>
+                                        <th>Ticket No</th>
+                                        <th>Subject</th>
+                                        <th>Assigned To</th>
+                                        <th>Status</th>
+                                        <th>Estimated Time</th>
+                                        <th>Assigned Time</th>
+                                        <th>Completion Date</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr data-ng-repeat="obj in data" class="ticket-row">
+                                        <td data-ng-bind="obj.id"></td>
+                                        <td data-ng-bind="obj.ticketNo"></td>
+                                        <td data-ng-bind="obj.ticketSubject"></td>
+                                        <td data-ng-bind="obj.assignedTo"></td>
+                                        <td data-ng-bind="obj.status"></td>
+                                        <td data-ng-bind="obj.estimatedTime"></td>
+                                        <td data-ng-bind="obj.assignedTime"></td>
+                                        <td data-ng-bind="obj.completionDatetime"></td>
+                                        <td>
+                                            <button class="btn btn-info btn-sm" data-ng-click="showDetails(obj)" style="padding: 5px 10px;">View Details</button>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- Modal for viewing details -->
+                    <div class="modal fade" id="detailsModal" tabindex="-1" role="dialog" aria-labelledby="detailsModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header" style="background-color: #1e90ff; color: #fff;">
+                                    <h5 class="modal-title" id="detailsModalLabel">Ticket Details</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="container-fluid">
+                                        <div class="row">
+                                            <!-- Left side details -->
+                                            <div class="col-md-6">
+                                                <table class="table table-borderless">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>ID:</strong></td>
+                                                            <td>{{ selectedTicket.id }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Ticket No:</strong></td>
+                                                            <td>{{ selectedTicket.ticketNo }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Subject:</strong></td>
+                                                            <td>{{ selectedTicket.ticketSubject }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Assigned To:</strong></td>
+                                                            <td>{{ selectedTicket.assignedTo }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Assigned By:</strong></td>
+                                                            <td>{{ selectedTicket.assignedBy }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <!-- Right side details -->
+                                            <div class="col-md-6">
+                                                <table class="table table-borderless">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>Status:</strong></td>
+                                                            <td>{{ selectedTicket.status }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Priority:</strong></td>
+                                                            <td>{{ selectedTicket.priority }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Severity:</strong></td>
+                                                            <td>{{ selectedTicket.severity }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Estimated Time:</strong></td>
+                                                            <td>{{ selectedTicket.estimatedTime }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Completion Date:</strong></td>
+                                                            <td>{{ selectedTicket.completionDatetime }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Second row for additional info -->
+                                        <div class="row mt-3">
+                                            <div class="col-md-6">
+                                                <table class="table table-borderless">
+                                                    <tbody>
+                                                        <tr>
+                                                            <td><strong>Reproducibility:</strong></td>
+                                                            <td>{{ selectedTicket.reproducibility }}</td>
+                                                        </tr>
+                                                        <tr>
+                                                            <td><strong>Category:</strong></td>
+                                                            <td>{{ selectedTicket.category }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+
+                                            <div class="col-md-6">
+                                                <table class="table table-borderless">
+                                                    <tbody>
+		                                                <tr>
+														    <td><strong>Attachments:</strong></td>
+														    <td>
+														        <a href="{{ selectedTicket.attachments }}" target="_blank">{{ selectedTicket.attachments }}</a>
+														    </td>
+	                                                 	</tr>
+
+                                                        <tr>
+                                                            <td><strong>Active Flag:</strong></td>
+                                                            <td>{{ selectedTicket.activeFlag }}</td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+
+                                        <!-- Ticket Description -->
+                                        <div class="row mt-3">
+                                            <div class="col-md-12">
+                                                <p><strong>Ticket Description:</strong></p>
+                                                <p>{{ selectedTicket.ticketDescription }}</p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close Ticket</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- External script -->
+                    <script type="text/javascript" th:src="@{/ctrl/welcome-ctrl.js}"></script>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</th:block>
